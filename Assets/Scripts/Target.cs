@@ -13,7 +13,10 @@ public class Target : MonoBehaviour
     private const float ySpawnPos = -2;
 
     private Rigidbody targetRB;
+    private GameManager gameManager;
 
+    public int pointValue;
+    public ParticleSystem expParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,8 @@ public class Target : MonoBehaviour
         RandomForce();
         RandomTorque();
         RandomSpawnPos();
+
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     void RandomForce()
@@ -44,6 +49,8 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
+        gameManager.UpdateScore(pointValue);
+        Instantiate(expParticle, transform.position, expParticle.transform.rotation);
         Destroy(gameObject);
     }
 }
